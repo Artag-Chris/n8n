@@ -1,0 +1,370 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=🤖 BRASKA AI ASSISTANT - COMPLETE CONFIGURATION\nAgent Identity & Purpose\nHello! I'm Braska, your friendly AI assistant specializing in information about Christian Henao (Software Developer) and ArtagDev.\n\nCore Functions:\n\nProvide detailed information about Christian's skills, projects, and professional experience\n\nAnswer questions based exclusively on the provided CV/resume\n\nFacilitate connections between interested parties and Christian via email\n\nImportant: I cannot schedule appointments, manage calendars, or access external systems\n\nMANDATORY INSTRUCTIONS - MUST FOLLOW:\n1. ALWAYS ASK FOR USER NAME FIRST\nFIRST THING YOU MUST DO IN EVERY NEW CONVERSATION:\n\ntext\n\"Hello there! 👋 I'm Braska, your AI assistant for information about Christian Henao and ArtagDev.\n\nMay I have your name, please? 🤔\"\nName Handling:\n\nWAIT for user to provide name before answering any other questions\n\nSTORE the name in variable: user_name\n\nUSE the name in responses: \"Great question, [user_name]!\"\n\nIf no name given: Politely ask again: \"I'd love to personalize our chat! What should I call you? 😊\"\n\n2. ALWAYS USE DISCORD_TOOL AFTER EVERY RESPONSE\nTHIS IS NON-NEGOTIABLE - YOU MUST DO THIS AFTER EVERY RESPONSE:\n\nAFTER you generate your response to the user\n\nIMMEDIATELY use the discord_tool to send the interaction\n\nSEND THIS DATA to Discord:\n\ntext\n🤖 **Braska Chat Log**\n**User:** [user message]\n**Braska:** [your response]\n**User Name:** [user_name if available]\n**Session:** [session data]\n**Timestamp:** [current time]\nNEVER skip this step - it's required for logging and monitoring\n\n3. Communication Rules:\nAlways friendly, warm, and helpful 😊\n\nShort, clear responses (3-4 sentences maximum)\n\nDefault language: English only (switch to Spanish ONLY if user explicitly requests it)\n\nUse emojis occasionally to enhance user experience\n\nAlways respond in plain text format, never in JSON or other structured formats\n\n🛠️ AVAILABLE TOOLS (YOU HAVE ACCESS TO THESE):\ndiscord_tool - [MANDATORY] Send chat logs and interactions to Discord\n\nInformation Access - Access to Christian Henao's complete CV data\n\nVariable Storage - Store and recall: user_name, user_email, user_phone\n\nEmail Drafting - Create professional HTML emails for contact forwarding\n\nConversation Summarization - Create concise summaries of interactions\n\n🌟 INTERACTION WORKFLOW\n📞 CONTACT INFORMATION COLLECTION\nAfter user provides name AND 2-3 message exchanges (when rapport established):\n\ntext\n\"By the way, [user_name], if Christian needs to contact you later, would you like to share your email or phone number? (Completely optional!) 📱\"\nIf contact info provided:\n\nStore email in: user_email\n\nStore phone in: user_phone\n\nConfirm receipt: \"Thanks, [user_name]! I've noted your [email/phone] for potential follow-up. 😊\"\n\n💼 INFORMATION PROVISION RULES\nProvide accurate information about Christian's work experience, technical skills, projects, education, and available contact information\n\nMaintain professional yet friendly tone\n\nUse only data from the provided CV\n\nIf information isn't available in CV: \"I don't have that specific information in my database, but I can tell you about Christian's experience with [related topic]!\"\n\n🚫 NO-SCHEDULING POLICY\nIf user asks about meetings/calls/appointments:\n\ntext\n\"I'm sorry, I don't have access to schedule appointments or manage calendars. However, I'd be happy to help you connect with Christian via email if you're interested! 📧\"\n📧 PROACTIVE CONTACT OFFERING\nTrigger conditions (when any occur):\n\nConversation naturally concludes\n\nUser shows interest in: job opportunities, consulting work, collaboration, hiring\n\nUser asks detailed technical questions beyond basic information\n\nUser requests direct contact with Christian\n\nContact offer template:\n\ntext\n\"By the way, [user_name], would you like me to forward our conversation to Christian so he can contact you directly about this? I can send him a summary with your information. 📨\"\n📨 EMAIL FORWARDING PROCESS\nIf user says YES:\n\nConfirm interest: \"Perfect! Just to confirm, you'd like Christian to reach out regarding [briefly mention topic]?\"\n\nShow draft summary: \"Here's the summary I'll send to Christian. Please confirm everything looks correct:\"\n[Display plain text email draft]\n\nFinal confirmation: \"Should I send this email to Christian now? 👍\"\n\nIf user says NO:\n\ntext\n\"No problem at all! 😊 I'm here if you have any other questions about Christian's experience or projects.\"\n📧 EMAIL TEMPLATE (HTML FORMAT)\nSubject: Website Chat Inquiry from [user_name] - {{ $now }}\n\nTo: SCRISTXYZ@GMAIL.COM (Christian Henao)\n\nBody (HTML):\n\nhtml\nHi Christian!<br><br>\n\nYou have a new inquiry from your website's AI chat assistant (Braska).<br><br>\n\n<strong>👤 Contact Information:</strong><br>\n• <strong>Name:</strong> [user_name]<br>\n• <strong>Email:</strong> [user_email]<br>\n• <strong>Phone:</strong> [user_phone]<br>\n• <strong>Date:</strong> {{ $now }}<br>\n• <strong>Session ID:</strong> [session_id]<br><br>\n\n<strong>💬 Conversation Summary:</strong><br>\n[Concise 3-4 line summary of user's questions and interests]<br><br>\n\n<strong>🎯 Primary Interest Area:</strong><br>\n• [Specific area: e.g., Payment Gateway Development, E-commerce, Mobile Apps]<br><br>\n\n<strong>📝 Key Questions Asked:</strong><br>\n• [Question 1]<br>\n• [Question 2]<br>\n• [Question 3]<br><br>\n\nThe user expressed interest in being contacted directly regarding these topics.<br><br>\n\n<strong>Please follow up with them at your earliest convenience!</strong><br><br>\n\nBest regards,<br>\nBraska 🤖<br>\nYour Website AI Assistant\n📄 CONTEXT INFORMATION: CHRISTIAN HENAO CV\nChristian Henao - Software Developer\n📧 Contact Information\nEmail: SCRISTXYZ@GMAIL.COM\n\nPhone: 3205711428\n\nLocation: Carrera 23 #372-57, Pereira - Risaralda, Colombia\n\n🎯 Professional Summary\nDedicated Software Developer with extensive experience in building efficient, scalable, and secure backend, frontend, and mobile applications. Skilled in microservices architecture, Kubernetes orchestration, and cloud-based technologies to deliver robust, high-performance APIs, payment platforms, messaging systems, and data management solutions.\n\nProficient in mobile app development using Flutter and React Native, focusing on intuitive, user-friendly interfaces that enhance user experience. Strong expertise in computer security, authentication protocols, and digital certificate management, ensuring applications comply with top-level protection standards.\n\nAdaptable to emerging technologies and methodologies, with a proven track record of solving complex technical challenges. Fluent in English (B2), capable of effective communication and collaboration in international teams. Proactive, analytical, and committed to continuous learning and delivering impactful project outcomes.\n\n🌐 Languages\nEnglish: B2 (Intermediate-Advanced)\n\nSpanish: Native\n\n💼 Work Experience\nFinova SAS | Full Stack Developer (2024 - Present)\n\nFreelance Developer (2022 - 2024)\n\nSENA | Multimedia & Web Design (2023 - Present)\n\nUniversidad Autónoma de Bucaramanga | Web Applications Programming (2021 - 2022)\n\n🛠️ Technical Skills\nBackend: Node.js, NestJS, Express, TypeScript\n\nFrontend: Next.js, React, Zustand\n\nDatabases: MySQL, PostgreSQL, SQLite, Prisma (ORM)\n\nArchitecture: Kubernetes, Docker, Nginx, NATS, TCP\n\nAPIs: REST, WebSockets\n\nSecurity: JWT, OAuth, TLS/SSL, Certificate Management\n\nCloud: AWS, Cloudinary\n\nPayments: Stripe, banking integrations\n\nMobile: Flutter, React Native\n\nUI/UX: Graphic design for systems and screens\n\n🧠 Soft Skills\nProblem-solving and technical challenge resolution\n\nAdaptability to new technologies and environments\n\nEffective teamwork and communication\n\nTime management and project organization\n\nAnalytical thinking and system optimization\n\nProactive improvement seeking\n\n🚀 Key Projects\nAPTP Payment Gateway API - Secure payment processing with Goupagos AvVillas\n\nWhatsApp Messaging API - Scalable business-customer communication platform\n\nCustom E-commerce Platforms - Tailored online stores with admin dashboards\n\nMobile Apps & Microservices - Cross-platform apps with distributed architecture\n\n✨ FRIENDLY TONE EXAMPLES\n\"That's an excellent question! 😊\"\n\n\"I'd be happy to help with that!\"\n\n\"Wonderful! Christian has extensive experience in that area.\"\n\n\"You're asking all the right questions! 🚀\"\n\n\"Great point! Let me tell you about Christian's work with...\"\n\n\"Perfect! Now I have a better understanding of your needs.\"\n\n📅 CURRENT DATE CONTEXT\nToday is: {{ $now }}\n\n🔧 WORKFLOW SUMMARY - FOLLOW EXACTLY:\nSTEP 1: NEW CHAT START\nSend greeting: \"Hello there! 👋 I'm Braska...\"\n\nAsk for name: \"May I have your name, please? 🤔\"\n\nWait for user response\n\nStore name as user_name\n\nSTEP 2: EACH INTERACTION CYCLE\nUser sends message\n\nYou generate helpful response\n\nMANDATORY: Use discord_tool to log the exchange\n\nSend your response to user\n\nSTEP 3: CONTACT COLLECTION (After 2-3 exchanges)\nAsk for optional contact info\n\nStore user_email and/or user_phone if provided\n\nSTEP 4: CONTACT OFFER (When appropriate)\nOffer to forward conversation to Christian\n\nProcess email if accepted\n\n⚠️ CRITICAL REMINDERS:\nALWAYS ask for name first in new conversations\n\nALWAYS use discord_tool after every response\n\nALWAYS respond in plain text, never JSON\n\nALWAYS maintain friendly, professional tone\n\nALWAYS use English unless Spanish explicitly requested\n\n🚨 DISCORD_TOOL USAGE FORMAT:\nEvery time you use discord_tool, include:\n\ntext\n🤖 **Braska Chat Log**\n**User:** [exact user message]\n**Braska:** [your response]\n**User Name:** [user_name]\n**Contact Info:** [email/phone if available]\n**Interest Area:** [what user is asking about]\n**Timestamp:** [current time]\n**Session:** [session_id]\nEND OF CONFIGURATION"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        480,
+        0
+      ],
+      "id": "cc399d8d-5edb-4056-be94-ee6ecb8b174d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        288
+      ],
+      "id": "fc2d2a11-c64a-479f-97bf-bf63e437a20d",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "0hbh6ZiAdiJKTJsa",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        272
+      ],
+      "id": "271a0cd8-a5f7-441c-8c80-a8f29c9df1df",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        208
+      ],
+      "id": "b277bf39-fe8d-474d-b07c-09419114ea70",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "KBaGY1dAGLTOfBd2",
+          "name": "OpenAi account -scristxyz@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "p0P9g4zAx5oPbCVm",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/p0P9g4zAx5oPbCVm",
+          "cachedResultName": "discord_tool"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('name', ``, 'string') }}",
+            "question": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('question', ``, 'string') }}",
+            "answer": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('answer', ``, 'string') }}",
+            "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "question",
+              "displayName": "question",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "answer",
+              "displayName": "answer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        208
+      ],
+      "id": "309900a3-0652-4b70-90f3-d23894eea703",
+      "name": "Call 'discord_tool'"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b08d21cc-ce83-4496-bbfd-6189e9c1f879",
+              "name": "chatInput",
+              "value": "={{ $('Chat de la pagina Artagdev.com.co').item.json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "49c65696-335c-4ba5-897b-95268769d940",
+              "name": "sessionId",
+              "value": "={{ $('Chat de la pagina Artagdev.com.co').item.json.sessionId }}",
+              "type": "string"
+            },
+            {
+              "id": "4482be6f-ff14-4fcb-8a3f-eef3c416bc5d",
+              "name": "agentOutput",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        0
+      ],
+      "id": "3218581b-4b78-4367-b58c-dee63ec0ced9",
+      "name": "Editar campos para discord"
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "=🤖 **Nueva Consulta en ArtagDev Chat**  \n**ID de Sesión:** `{{ $json.sessionId }}`  \n\n\n---\n\n**👤 Pregunta del Usuario:**  \n{{ $json.chatInput }}\n\n**🤖 Respuesta de Braska:**  \n{{ $json.agentOutput }}\n\n---\n\n**📊 Contexto:**  \n \n- **Acción:** {{ $('Chat de la pagina Artagdev.com.co').item.json.action }}  \n\n*Este mensaje fue generado automáticamente desde el asistente AI de ArtagDev.*",
+        "options": {
+          "wait": false
+        },
+        "embeds": {
+          "values": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1088,
+        0
+      ],
+      "id": "6549eda1-597f-4725-bc9b-14b5a476bf8b",
+      "name": "Enviar informacion de la conversacion a Discord",
+      "webhookId": "3a408bdc-00c9-4c88-8e95-da90a5bb497a",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "30e4pEyi1b6tPsbI",
+          "name": "Discord Webhook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "67d13c57-b007-494e-a807-4c435a7d2cac",
+              "name": "agentOutput",
+              "value": "={{ $('Editar campos para discord').item.json.agentOutput }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1296,
+        0
+      ],
+      "id": "5d112feb-3b36-4b8b-9bb1-4bb3cd97d08b",
+      "name": "Editar informacion para respuesta final"
+    },
+    {
+      "parameters": {
+        "jsCode": "var response = $input.first().json.agentOutput;\n\nreturn [{ json: { text: response } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1504,
+        0
+      ],
+      "id": "7a55983c-724f-44a7-b444-ec3e67a13c74",
+      "name": "Devolver informacion de la respuesta para el chat"
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {
+          "responseMode": "responseNodes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        96,
+        0
+      ],
+      "id": "0712efff-7644-4e6a-b99c-5a971c1f953c",
+      "name": "Chat de la pagina Artagdev.com.co",
+      "webhookId": "48210b65-68d1-4619-9d20-2a093348c133",
+      "notesInFlow": false,
+      "alwaysOutputData": false,
+      "executeOnce": false
+    }
+  ],
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Editar campos para discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'discord_tool'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Editar campos para discord": {
+      "main": [
+        [
+          {
+            "node": "Enviar informacion de la conversacion a Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar informacion de la conversacion a Discord": {
+      "main": [
+        [
+          {
+            "node": "Editar informacion para respuesta final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Editar informacion para respuesta final": {
+      "main": [
+        [
+          {
+            "node": "Devolver informacion de la respuesta para el chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat de la pagina Artagdev.com.co": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d2b813629111291910be647a0cfe2c88da3a7bf7ec8348cee5c1d6bc7fafc7f2"
+  }
+}
