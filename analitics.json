@@ -1,0 +1,266 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "hour": 15
+            }
+          ]
+        }
+      },
+      "id": "d36a8728-bfeb-492c-88a0-22afe87b45d4",
+      "name": "Schedule Trigger1",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        368,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "propertyId": {
+          "__rl": true,
+          "value": "289430428",
+          "mode": ""
+        },
+        "metricsGA4": {
+          "metricValues": [
+            {},
+            {
+              "listName": "eventCount"
+            },
+            {
+              "listName": "userEngagementDuration"
+            },
+            {
+              "listName": "screenPageViews"
+            },
+            {
+              "listName": "sessionsPerUser"
+            },
+            {
+              "listName": "sessions"
+            },
+            {
+              "listName": "active28DayUsers"
+            }
+          ]
+        },
+        "dimensionsGA4": {
+          "dimensionValues": [
+            {}
+          ]
+        },
+        "additionalFields": {}
+      },
+      "id": "9b8a2ef4-51b0-46f1-9121-6899934b4319",
+      "name": "Get Yesterday Analytics1",
+      "type": "n8n-nodes-base.googleAnalytics",
+      "typeVersion": 2,
+      "position": [
+        624,
+        304
+      ],
+      "credentials": {
+        "googleAnalyticsOAuth2": {
+          "id": "LN2h3OGIm4pWb5Hf",
+          "name": "Google Analytics Artagdev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "propertyId": {
+          "__rl": true,
+          "value": "289430428",
+          "mode": ""
+        },
+        "metricsGA4": {
+          "metricValues": [
+            {},
+            {
+              "listName": "eventCount"
+            },
+            {
+              "listName": "userEngagementDuration"
+            },
+            {
+              "listName": "screenPageViews"
+            },
+            {
+              "listName": "sessionsPerUser"
+            },
+            {
+              "listName": "sessions"
+            },
+            {
+              "listName": "active28DayUsers"
+            }
+          ]
+        },
+        "dimensionsGA4": {
+          "dimensionValues": [
+            {}
+          ]
+        },
+        "additionalFields": {}
+      },
+      "id": "3431a8d8-7a88-4a5b-b362-a26a6b9425ad",
+      "name": "Get Day Before Analytics1",
+      "type": "n8n-nodes-base.googleAnalytics",
+      "typeVersion": 2,
+      "position": [
+        624,
+        512
+      ],
+      "credentials": {
+        "googleAnalyticsOAuth2": {
+          "id": "LN2h3OGIm4pWb5Hf",
+          "name": "Google Analytics Artagdev"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Los datos vienen directamente en el JSON de GA4\nconst yesterdayItem = $input.all()[0]?.json;\nconst dayBeforeItem = $input.all()[1]?.json;\n\n// Extrae datos directamente del JSON\nconst yesterdayData = {\n  totalUsers: parseInt(yesterdayItem?.totalUsers || 0),\n  eventCount: parseInt(yesterdayItem?.eventCount || 0),\n  userEngagementDuration: parseInt(yesterdayItem?.userEngagementDuration || 0),\n  screenPageViews: parseInt(yesterdayItem?.screenPageViews || 0),\n  sessionsPerUser: parseFloat(yesterdayItem?.sessionsPerUser || 0),\n  sessions: parseInt(yesterdayItem?.sessions || 0),\n  active28DayUsers: parseInt(yesterdayItem?.active28DayUsers || 0)\n};\n\nconst dayBeforeData = {\n  totalUsers: parseInt(dayBeforeItem?.totalUsers || 0),\n  eventCount: parseInt(dayBeforeItem?.eventCount || 0),\n  userEngagementDuration: parseInt(dayBeforeItem?.userEngagementDuration || 0),\n  screenPageViews: parseInt(dayBeforeItem?.screenPageViews || 0),\n  sessionsPerUser: parseFloat(dayBeforeItem?.sessionsPerUser || 0),\n  sessions: parseInt(dayBeforeItem?.sessions || 0),\n  active28DayUsers: parseInt(dayBeforeItem?.active28DayUsers || 0)\n};\n\n// Calcula cambios porcentuales\nfunction calculateChange(current, previous) {\n  if (previous === 0) return { value: 0, percent: '0.00', trend: '➡️' };\n  const change = current - previous;\n  const percent = ((change / previous) * 100).toFixed(2);\n  const trend = change > 0 ? '📈' : change < 0 ? '📉' : '➡️';\n  return { value: change, percent, trend };\n}\n\nconst changes = {\n  totalUsers: calculateChange(yesterdayData.totalUsers, dayBeforeData.totalUsers),\n  eventCount: calculateChange(yesterdayData.eventCount, dayBeforeData.eventCount),\n  userEngagementDuration: calculateChange(yesterdayData.userEngagementDuration, dayBeforeData.userEngagementDuration),\n  screenPageViews: calculateChange(yesterdayData.screenPageViews, dayBeforeData.screenPageViews),\n  sessionsPerUser: calculateChange(yesterdayData.sessionsPerUser, dayBeforeData.sessionsPerUser),\n  sessions: calculateChange(yesterdayData.sessions, dayBeforeData.sessions),\n  active28DayUsers: calculateChange(yesterdayData.active28DayUsers, dayBeforeData.active28DayUsers)\n};\n\nreturn [{\n  json: {\n    yesterdayData,\n    dayBeforeData,\n    changes\n  }\n}];"
+      },
+      "id": "258523a9-1580-4224-b9b0-4c41fc7fce97",
+      "name": "Process Analytics Data1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.item.json;\nconst yesterday = data.yesterdayData;\nconst changes = data.changes;\nconst today = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });\n\nlet suggestions = [];\n\n// Análisis inteligente de métricas\nconst bounceRate = 100 - ((yesterday.sessions / yesterday.totalUsers) * 100);\nconst avgSessionDuration = yesterday.userEngagementDuration / yesterday.sessions;\n\nif (bounceRate > 60) {\n  suggestions.push('🔴 Tasa de rebote alta (>60%). Revisa el contenido y UX de la página principal.');\n}\nif (avgSessionDuration < 30) {\n  suggestions.push('⚠️ Duración baja (<30s). Mejora la experiencia y relevancia del contenido.');\n}\nif (yesterday.totalUsers < 50) {\n  suggestions.push('📣 Pocos usuarios (<50). Invierte en SEO y publicidad digital.');\n}\nif (changes.totalUsers.percent > 20) {\n  suggestions.push('✨ Crecimiento excelente (>20%)! Mantén esta tendencia.');\n}\nif (changes.sessions.percent < -15) {\n  suggestions.push('⚠️ Caída de sesiones (>15%). Investiga cambios recientes.');\n}\nif (yesterday.active28DayUsers > yesterday.totalUsers * 2) {\n  suggestions.push('🎯 Usuarios recurrentes altos. Excelente retención!');\n}\nif (yesterday.eventCount / yesterday.sessions < 1) {\n  suggestions.push('💡 Baja interacción por sesión. Añade CTAs y elementos interactivos.');\n}\n\nif (suggestions.length === 0) {\n  suggestions.push('✅ Métricas estables y saludables. Continúa con la estrategia actual.');\n}\n\nreturn [{\n  json: {\n    ...data,\n    suggestions,\n    today,\n    bounceRate: (100 - ((yesterday.sessions / yesterday.totalUsers) * 100)).toFixed(2),\n    avgSessionDuration: (yesterday.userEngagementDuration / yesterday.sessions).toFixed(0)\n  }\n}];"
+      },
+      "id": "c05903ea-68b4-46c2-bad8-b00ea42efbfe",
+      "name": "Generate Insights1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.item.json;\nconst y = data.yesterdayData;\nconst c = data.changes;\n\n// Función para formatear números con separador de miles\nfunction formatNumber(num) {\n  return Math.round(num).toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, '.');\n}\n\n// Función para crear barra visual\nfunction createBar(value, max = 100) {\n  const filled = Math.round(Math.min(10, Math.max(0, (value / max) * 10)));\n  const empty = 10 - filled;\n  return '█'.repeat(filled) + '░'.repeat(empty);\n}\n\nconst embeds = [\n  {\n    \"title\": `📅 Reporte Diario - ${data.today}`,\n    \"description\": `**Datos de ayer comparados con el día anterior**\\n`,\n    \"color\": 3447003,\n    \"thumbnail\": {\n      \"url\": \"https://www.gstatic.com/images/branding/product/1x/analytics_48dp.png\"\n    },\n    \"fields\": [\n      {\n        \"name\": \"👥 Usuarios Únicos\",\n        \"value\": `**${formatNumber(y.totalUsers)}** ${c.totalUsers.trend}\\n${c.totalUsers.percent}% vs día anterior\\nBarra: ${createBar(y.totalUsers, 500)}`,\n        \"inline\": true\n      },\n      {\n        \"name\": \"📊 Sesiones Totales\",\n        \"value\": `**${formatNumber(y.sessions)}** ${c.sessions.trend}\\n${c.sessions.percent}% vs día anterior\\nBarra: ${createBar(y.sessions, 200)}`,\n        \"inline\": true\n      },\n      {\n        \"name\": \"💬 Eventos Registrados\",\n        \"value\": `**${formatNumber(y.eventCount)}** ${c.eventCount.trend}\\n${c.eventCount.percent}% vs día anterior\\nBarra: ${createBar(y.eventCount, 500)}`,\n        \"inline\": true\n      },\n      {\n        \"name\": \"📄 Páginas Vistas\",\n        \"value\": `**${formatNumber(y.screenPageViews)}** ${c.screenPageViews.trend}\\n${c.screenPageViews.percent}% vs día anterior\\nBarra: ${createBar(y.screenPageViews, 200)}`,\n        \"inline\": true\n      },\n      {\n        \"name\": \"⏱️ Duración Promedio\",\n        \"value\": `**${data.avgSessionDuration}s** (~${Math.round(data.avgSessionDuration / 60)}m) ${c.userEngagementDuration.trend}\\n${c.userEngagementDuration.percent}%\\nBarra: ${createBar(Math.min(data.avgSessionDuration, 300), 300)}`,\n        \"inline\": true\n      },\n      {\n        \"name\": \"⏹️ Tasa de Rebote\",\n        \"value\": `**${data.bounceRate}%**\\n${data.bounceRate > 60 ? '🔴 ALTA' : data.bounceRate > 40 ? '🟡 MEDIA' : '🟢 BUENA'}\\nBarra: ${createBar(100 - data.bounceRate, 100)}`,\n        \"inline\": true\n      },\n      {\n        \"name\": \"👥 Usuarios Activos (28d)\",\n        \"value\": `**${formatNumber(y.active28DayUsers)}** ${c.active28DayUsers.trend}\\n${c.active28DayUsers.percent}% vs día anterior\\nBarra: ${createBar(y.active28DayUsers, 500)}`,\n        \"inline\": true\n      },\n      {\n        \"name\": \"📈 Sesiones por Usuario\",\n        \"value\": `**${y.sessionsPerUser.toFixed(2)}** ${c.sessionsPerUser.trend}\\n${c.sessionsPerUser.percent}% vs día anterior`,\n        \"inline\": true\n      }\n    ],\n    \"footer\": {\n      \"text\": \"Google Analytics | n8n Bot\",\n      \"icon_url\": \"https://www.gstatic.com/images/branding/product/1x/analytics_48dp.png\"\n    }\n  },\n  {\n    \"title\": \"💡 Análisis y Recomendaciones\",\n    \"description\": data.suggestions.map(s => `• ${s}`).join('\\n'),\n    \"color\": 16776960,\n    \"fields\": [\n      {\n        \"name\": \"📋 Resumen Ejecutivo\",\n        \"value\": `**Visitantes:** ${formatNumber(y.totalUsers)} personas\\n**Interacción:** ${((y.sessions / y.totalUsers) * 100).toFixed(0)}% de los usuarios regresaron\\n**Permanencia:** Promedio de ${data.avgSessionDuration}s por sesión\\n**Engagement:** ${formatNumber(y.eventCount)} eventos registrados`,\n        \"inline\": false\n      },\n      {\n        \"name\": \"🎯 Próximos Pasos\",\n        \"value\": \"1️⃣ Revisa los datos completos en Google Analytics\\n2️⃣ Implementa las mejoras recomendadas\\n3️⃣ Monitorea el impacto en próximos reportes\",\n        \"inline\": false\n      }\n    ]\n  }\n];\n\nreturn [{\n  json: {\n    \"content\": \"📈 **REPORTE DIARIO DE ANALYTICS** | artagdev.com.co\",\n    \"embeds\": embeds\n  }\n}];"
+      },
+      "id": "352db99c-341d-46f2-bcd4-f00f0c7937f6",
+      "name": "Format Discord Message1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1376,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $json.content }}\n{{ $json.embeds[0].title }}\n{{ $json.embeds[0].description }}\n{{ $json.embeds[0].color }}\n{{ $json.embeds[0].fields[0].name }}\n{{ $json.embeds[0].fields[0].value }}\n\n{{ $json.embeds[0].fields[1].name }}\n{{ $json.embeds[0].fields[1].value }}\n\n{{ $json.embeds[0].fields[2].name }}\n{{ $json.embeds[0].fields[2].value }}\n\n{{ $json.embeds[0].fields[3].name }}\n{{ $json.embeds[0].fields[3].value }}\n\n{{ $json.embeds[0].fields[4].name }}\n{{ $json.embeds[0].fields[4].value }}\n\n{{ $json.embeds[0].fields[5].name }}\n{{ $json.embeds[0].fields[5].value }}\n\n{{ $json.embeds[0].fields[6].name }}\n{{ $json.embeds[0].fields[7].value }}\n\n{{ $json.embeds[1].fields[0].name }}\n{{ $json.embeds[1].fields[0].value }}\n\n{{ $json.embeds[1].fields[1].name }}\n{{ $json.embeds[1].fields[1].value }}",
+        "options": {}
+      },
+      "id": "f221dc3e-9c40-4226-807a-48de28a65391",
+      "name": "Send to Discord1",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1632,
+        416
+      ],
+      "webhookId": "618952fe-2fb7-4aaa-ae8f-0b78d08b68db",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "30e4pEyi1b6tPsbI",
+          "name": "Discord Webhook account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get Yesterday Analytics1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Day Before Analytics1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Yesterday Analytics1": {
+      "main": [
+        [
+          {
+            "node": "Process Analytics Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Day Before Analytics1": {
+      "main": [
+        [
+          {
+            "node": "Process Analytics Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Analytics Data1": {
+      "main": [
+        [
+          {
+            "node": "Generate Insights1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Insights1": {
+      "main": [
+        [
+          {
+            "node": "Format Discord Message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Discord Message1": {
+      "main": [
+        [
+          {
+            "node": "Send to Discord1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d2b813629111291910be647a0cfe2c88da3a7bf7ec8348cee5c1d6bc7fafc7f2"
+  }
+}
